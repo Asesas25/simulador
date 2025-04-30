@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador de Crédito</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    label, input, select {
+      display: block;
+      margin: 10px 0;
+    }
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Simulador de Crédito</h2>
+  <p>Tasa de interés fija: <strong>0,85% mensual</strong></p>
+
+  <label>Monto del préstamo:
+    <input type="number" id="monto" placeholder="Ej: 1000000">
+  </label>
+
+  <label>Plazo:
+    <select id="plazo">
+      <option value="6">6 meses</option>
+      <option value="12">12 meses</option>
+      <option value="24">24 meses</option>
+      <option value="36">36 meses</option>
+      <option value="48">48 meses</option>
+    </select>
+  </label>
+
+  <button onclick="calcular()">Calcular</button>
+
+  <h3 id="resultado"></h3>
+
+  <script>
+    function calcular() {
+      const monto = parseFloat(document.getElementById("monto").value);
+      const plazo = parseInt(document.getElementById("plazo").value);
+      const tasaMensual = 0.0085;
+
+      if (isNaN(monto) || isNaN(plazo)) {
+        document.getElementById("resultado").innerText = "Por favor completa todos los campos.";
+        return;
+      }
+
+      const cuota = (monto * tasaMensual * Math.pow(1 + tasaMensual, plazo)) / 
+                    (Math.pow(1 + tasaMensual, plazo) - 1);
+
+      document.getElementById("resultado").innerText = `Tu cuota mensual sería: $${cuota.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>
